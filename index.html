@@ -1,0 +1,598 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>طلب شراء منبه النعاس للسيارة - شركة الرياح</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 10px;
+      background: linear-gradient(135deg, #fbc305 0%, #f8d568 100%);
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #000000, #333333);
+      padding: 12px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .product-title {
+      text-align: center;
+      color: #000;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    /* السلايدر المحسن */
+    .slider-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto 20px;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+    
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 320px;
+    }
+    
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #f8f8f8;
+      padding: 10px;
+    }
+    
+    .slider-controls {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      z-index: 10;
+    }
+    
+    .slider-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .slider-dot.active {
+      background: #fbc305;
+      transform: scale(1.2);
+    }
+    
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+    
+    .slider-arrow:hover {
+      background: rgba(0, 0, 0, 0.9);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .slider-arrow.prev {
+      right: 15px;
+    }
+    
+    .slider-arrow.next {
+      left: 15px;
+    }
+
+    .product-specs {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      border: 1px solid #fbc305;
+    }
+
+    .product-specs h2 {
+      text-align: center;
+      color: #000;
+      margin-bottom: 15px;
+      font-size: 18px;
+      border-bottom: 2px solid #fbc305;
+      padding-bottom: 8px;
+    }
+
+    .spec-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .spec-icon {
+      background: #fbc305;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      flex-shrink: 0;
+      font-size: 18px;
+      color: #000;
+    }
+
+    .spec-text {
+      flex: 1;
+    }
+
+    .spec-text h4 {
+      margin: 0 0 5px 0;
+      color: #000;
+      font-size: 16px;
+    }
+
+    .spec-text p {
+      margin: 0;
+      color: #555;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      border: 1px solid #fbc305;
+    }
+
+    h1 {
+      text-align: center;
+      color: #000;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+      font-size: 14px;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #fbc305;
+      box-shadow: 0 0 5px rgba(251, 195, 5, 0.3);
+    }
+
+    .payment-method {
+      background: #f5f5f5;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .payment-method span {
+      font-weight: bold;
+      color: #000;
+    }
+
+    /* أزرار الكمية */
+    .quantity-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .quantity-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .quantity-btn:hover { 
+      background: #fbc305;
+      color: #000;
+    }
+    #quantity {
+      width: 60px;
+      text-align: center;
+      font-size: 16px;
+      border: 2px solid #fbc305;
+      margin: 0 8px;
+      border-radius: 5px;
+      padding: 6px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .price-summary {
+      text-align: center;
+      padding: 10px;
+      background: linear-gradient(135deg, #fff9e6, #ffeaa7);
+      border: 2px solid #fbc305;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .price-details {
+      margin-bottom: 8px;
+    }
+
+    .single-price {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .original-price {
+      font-size: 14px;
+      color: #888;
+      text-decoration: line-through;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .discount-badge {
+      background: #ff4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .total-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .submit-btn {
+      background: linear-gradient(to right, #000, #333);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .submit-btn:hover { 
+      background: linear-gradient(to right, #fbc305, #f8d568);
+      color: #000;
+      box-shadow: 0 4px 8px rgba(251, 195, 5, 0.3);
+    }
+
+    .delivery-note {
+      text-align: center;
+      background: #e3f2fd;
+      color: #1565c0;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 12px 0;
+      font-weight: bold;
+      border: 1px solid #2196f3;
+    }
+
+    .company-info {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      border: 1px solid #fbc305;
+    }
+
+    .company-info h3 {
+      text-align: center;
+      color: #000;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .info-value {
+      color: #000;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>شركة الرياح للتسوق الإلكتروني</h2>
+  </div>
+
+  <div class="product-title">
+    ⏰ منبه النعاس للسيارة - جهاز تنبيه السائق
+  </div>
+
+  <!-- سلايدر الصور المحسن -->
+  <div class="slider-container">
+    <div class="slider" id="slider">
+      <div class="slide">
+        <img src="https://m.media-amazon.com/images/I/61+PNzGMWQL.jpg" alt="منبه النعاس للسيارة - الصورة 1">
+      </div>
+      <div class="slide">
+        <img src="https://m.media-amazon.com/images/I/61CfaSfWZDL.jpg" alt="منبه النعاس للسيارة - الصورة 2">
+      </div>
+      <div class="slide">
+        <img src="https://m.media-amazon.com/images/I/512B9COYGCL._AC_UF1000,1000_QL80_.jpg" alt="منبه النعاس للسيارة - الصورة 3">
+      </div>
+    </div>
+    
+    <button class="slider-arrow prev" onclick="moveSlide(-1)">❮</button>
+    <button class="slider-arrow next" onclick="moveSlide(1)">❯</button>
+    
+    <div class="slider-controls" id="sliderDots">
+      <div class="slider-dot active" onclick="goToSlide(0)"></div>
+      <div class="slider-dot" onclick="goToSlide(1)"></div>
+      <div class="slider-dot" onclick="goToSlide(2)"></div>
+    </div>
+  </div>
+
+  <div class="product-specs">
+    <h2>مواصفات المنتج</h2>
+    
+    <div class="spec-item">
+      <div class="spec-icon">🚗</div>
+      <div class="spec-text">
+        <h4>تنبيه السائق أثناء القيادة</h4>
+        <p>جهاز إنذار للسيارة لتنبيه السائق عند الشعور بالنعاس أثناء القيادة</p>
+      </div>
+    </div>
+    
+    <div class="spec-item">
+      <div class="spec-icon">📢</div>
+      <div class="spec-text">
+        <h4>نظام تنبيه صوتي فعال</h4>
+        <p>يصدر صوت "طوط/طوط/طوط/طوط" واضح عند الشعور بالنعاس لتنبيه السائق</p>
+      </div>
+    </div>
+    
+    <div class="spec-item">
+      <div class="spec-icon">📏</div>
+      <div class="spec-text">
+        <h4>صغير الحجم وخفيف الوزن</h4>
+        <p>سهل الحمل والاستخدام، مثالي للاستخدام أثناء القيادة</p>
+      </div>
+    </div>
+    
+    <div class="spec-item">
+      <div class="spec-icon">🎧</div>
+      <div class="spec-text">
+        <h4>تصميم مريح ومدروس</h4>
+        <p>مريح للتعليق على الأذن، لا يسبب إزعاج أثناء الاستخدام</p>
+      </div>
+    </div>
+    
+    <div class="spec-item">
+      <div class="spec-icon">🛡️</div>
+      <div class="spec-text">
+        <h4>جودة عالية في التصنيع</h4>
+        <p>مصنوع من مادة ABS عالية الجودة، مقاوم ومتين للاستخدام المستمر</p>
+      </div>
+    </div>
+    
+    <div class="spec-item">
+      <div class="spec-icon">⚠️</div>
+      <div class="spec-text">
+        <h4>حماية من الحوادث</h4>
+        <p>بمجرد الشعور بالنعاس، يصدر صوت تنبيه واضح يجعلك تشعر بالانتعاش لتجنب الحوادث</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <h1>طلب شراء</h1>
+    <form id="orderForm">
+      <label for="name">الاسم بالكامل *</label>
+      <input type="text" id="name" required placeholder="أدخل اسمك">
+
+      <label for="address">العنوان *</label>
+      <textarea id="address" rows="2" required placeholder="المنطقة - الشارع - المدينة"></textarea>
+
+      <label for="phone">رقم الهاتف *</label>
+      <input type="tel" id="phone" required placeholder="07XXXXXXXX">
+
+      <div class="payment-method">
+        <span>طريقة الدفع: الدفع عند الاستلام</span>
+      </div>
+
+      <div class="delivery-note">
+        ⏳ سيتم توصيل طلبك خلال 72 ساعة فقط
+      </div>
+
+      <div class="quantity-container">
+        <button type="button" class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+        <input type="text" id="quantity" value="1" readonly>
+        <button type="button" class="quantity-btn" onclick="changeQuantity(1)">+</button>
+      </div>
+
+      <div class="price-summary">
+        <div class="price-details">
+          <div class="single-price">
+            <span class="discount-badge">خصم</span> سعر القطعة: 
+            <span class="original-price">19,000 دينار</span>
+            15,000 دينار
+          </div>
+        </div>
+        <div class="total-price" id="totalPrice">15,000 دينار عراقي</div>
+      </div>
+
+      <button type="button" class="submit-btn" onclick="sendToWhatsApp()">إرسال الطلب عبر واتساب</button>
+    </form>
+  </div>
+
+  <div class="company-info">
+    <h3>معلومات الشركة</h3>
+    <div class="info-item">
+      <span class="info-label">رقم الاتصال:</span>
+      <span class="info-value">07778610036</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">البريد الإلكتروني:</span>
+      <span class="info-value">riyahcompany@gmail.com</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">جهة التوثيق:</span>
+      <span class="info-value">وزارة التجارة العراقية</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2023 شركة الرياح للتسوق الإلكتروني. جميع الحقوق محفوظة.</p>
+  </div>
+
+  <script>
+    // السلايدر
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    const slider = document.getElementById('slider');
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // تحديث النقاط
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function moveSlide(step) {
+      currentSlide = (currentSlide + step + slides.length) % slides.length;
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    // تشغيل السلايدر تلقائياً كل 4 ثواني
+    setInterval(() => moveSlide(1), 4000);
+
+    // حساب السعر حسب القاعدة (القطعة الأولى فقط 15,000)
+    function calculatePrice() {
+      let qty = parseInt(document.getElementById("quantity").value) || 1;
+      let total = 0;
+
+      if (qty === 1) {
+        total = 15000; // السعر الجديد للقطعة الأولى
+      } else if (qty === 2) {
+        total = 25000; // سعر قطعتين كما كان
+      } else if (qty > 2) {
+        total = 25000 + (qty - 2) * 10000; // نفس القاعدة السابقة
+      }
+
+      document.getElementById("totalPrice").innerText = total.toLocaleString() + " دينار عراقي";
+    }
+
+    // تغيير الكمية
+    function changeQuantity(step) {
+      let qtyInput = document.getElementById("quantity");
+      let qty = parseInt(qtyInput.value) || 1;
+      qty = Math.max(1, qty + step);
+      qtyInput.value = qty;
+      calculatePrice();
+    }
+
+    // واتساب
+    function sendToWhatsApp() {
+      let name = document.getElementById("name").value;
+      let address = document.getElementById("address").value;
+      let phone = document.getElementById("phone").value;
+      let qty = document.getElementById("quantity").value;
+      let total = document.getElementById("totalPrice").innerText;
+
+      let message = `طلب شراء منبه النعاس للسيارة:\nالاسم: ${name}\nالعنوان: ${address}\nالهاتف: ${phone}\nطريقة الدفع: الدفع عند الاستلام\nالعدد: ${qty}\nالإجمالي: ${total}\n\nملاحظة: سيتم توصيل طلبك خلال 72 ساعة فقط`;
+      let url = "https://wa.me/9647778610036?text=" + encodeURIComponent(message);
+      window.open(url, "_blank");
+    }
+
+    calculatePrice();
+  </script>
+</body>
+</html>
